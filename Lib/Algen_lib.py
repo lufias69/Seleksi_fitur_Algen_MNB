@@ -198,3 +198,8 @@ def int_to_str(d):
     for i in d:
         n.append(str(i)) 
     return "".join(n)
+
+def tampil_finess(x, batas=20):
+    x=str(x)
+    selisih = len(x)-batas
+    return x+(" "*abs(selisih))
