@@ -152,10 +152,10 @@ def changesBinary(d):
             d[ix]=1
     return d
 
-def crossover(pp1_, pp2_, panjang_fitur, jumlah_point = 7, prob_mutasi = 0.7):
-    pp1 = pp1_
-    pp2 = pp2_
-    jumlah_point = jumlah_point+1
+def crossover(pp1_, pp2_, panjang_fitur, jumlah_titik = 7, prob_mutasi = 0.7):
+    pp1 = list(pp1_)
+    pp2 = list(pp2_)
+    jumlah_point = jumlah_titik+1
 #     prob_mutasi = 0.7
     titik = int(panjang_fitur/jumlah_point)
     cek = 0
