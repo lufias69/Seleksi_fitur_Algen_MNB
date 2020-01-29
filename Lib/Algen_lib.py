@@ -94,10 +94,29 @@ def Modeling(X,y, X_, y_, features_bin, features, alpha = 1, metode = "tfidf"):
     X_ = data['model'].transform(X_)
     return clf.score(X_,y_)
 
+def int_to_str(d):
+    n =list()
+    for i in d:
+        n.append(str(i)) 
+    return "".join(n)
 
 def create_population(nelem,  length, min=0, max=1):
-    return [create_chromosome(min, max, length) for i in range(nelem)]    
+    temp_pop = list()
+    populasi = list()
+    
+    gagal = 0
+    while len(populasi)<nelem:
+        individu = create_chromosome(min, max, length)
+        str_individu = int_to_str(individu)
 
+        if str_individu not in temp_pop:
+            populasi.append(individu)
+            temp_pop.append(str_individu)
+        else:
+            gagal+=1
+            print(gagal, end=("."))
+            print("|",len(populasi),"|", end="")
+    return populasi   
 
 
 def get_roulette_wheel_(population, inc=0):
@@ -193,11 +212,6 @@ def crossover(pp1_, pp2_, panjang_fitur, jumlah_titik = 7, prob_mutasi = 0.7):
 
     return [pp1, pp2, anak_ke_3]
 
-def int_to_str(d):
-    n =list()
-    for i in d:
-        n.append(str(i)) 
-    return "".join(n)
 
 def tampil_finess(x, batas=20):
     x=str(x)
