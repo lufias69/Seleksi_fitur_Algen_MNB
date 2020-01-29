@@ -193,14 +193,6 @@ def crossover(pp1_, pp2_, panjang_fitur, jumlah_titik = 7, prob_mutasi = 0.7):
 
     return [pp1, pp2, anak_ke_3]
 
-# def get_fitness_child(ortu, corpus_latih,label_latih, corpusU,labelU, fitur, alpha = 1, metode = "tfidf", pop=pop):
-#     output = list()
-#     for i in ortu:
-# #         print( pop[i])
-#         f = fitness_(corpus,label, corpus,label, pop[i], fitur, alpha=alpha, metode = metode)
-#         output.append([pop[i], f])
-#     return output
-
 def int_to_str(d):
     n =list()
     for i in d:
