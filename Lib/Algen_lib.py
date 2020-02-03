@@ -195,11 +195,12 @@ def crossover(pp1_, pp2_, panjang_fitur, jumlah_titik = 7, prob_mutasi = 0.7):
 
         pp1[m:a] = pp2_Q
         pp2[m:a] = pp1_Q
-
-    if random.random() > prob_mutasi:
+    r=random.random()
+    if r >= prob_mutasi:
         pp1 = changesBinary(pp1)
 
-    if random.random() > prob_mutasi:
+    r=random.random()
+    if r >= prob_mutasi:
         pp2 = changesBinary(pp2)
 
 
@@ -217,3 +218,10 @@ def tampil_finess(x, batas=20):
     x=str(x)
     selisih = len(x)-batas
     return x+(" "*abs(selisih))
+
+def sort_data(sub_li, index=1): 
+    return(sorted(sub_li,reverse=True, key = lambda x: x[index]))     
+  
+# Driver Code 
+# sub_li =[['rishav', 10], ['akash', 5], ['ram', 20], ['gaurav', 15]] 
+# print(Sort(sub_li))

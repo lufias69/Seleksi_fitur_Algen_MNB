@@ -31,10 +31,6 @@ def features_selection(dataL, labelL, dataU, labelU,  jumlah_populasi, jumlah_ti
         bin_str = lib.int_to_str(p) 
         pop_used.update({bin_str:fit})
 
-    # print("")
-
-    # print(pop[0])
-
     best_fitur_list = list()
     best_fitness_list = list()
     best_generasi_list = list()
@@ -60,71 +56,98 @@ def features_selection(dataL, labelL, dataU, labelU,  jumlah_populasi, jumlah_ti
             family_fitness=list()
             family_fitur=list()
 
+            for ortu_index in p:
+                # pop_fitness_ortu = fitnes_pop[ortu_index]
+                family_fitness.append(fitnes_pop[ortu_index])
+
+                populasi_ortu__ = list(pop[ortu_index])
+                family_fitur.append(populasi_ortu__)
+
             mama_index = p[0]
             papa_index = p[1]
 
-            m4ms = fitnes_pop[mama_index]
-            family_fitness.append(m4ms)
-            m4mr = list(pop[mama_index])
-            family_fitur.append(m4mr)
+            # m4ms = fitnes_pop[mama_index]
+            # family_fitness.append(m4ms)
+            # m4mr = list(pop[mama_index])
+            # family_fitur.append(m4mr)
 
-            p4ps = fitnes_pop[papa_index]
-            family_fitness.append(p4ps)
-            p4pr = list(pop[papa_index])
-            family_fitur.append(p4pr)
+            # p4ps = fitnes_pop[papa_index]
+            # family_fitness.append(p4ps)
+            # p4pr = list(pop[papa_index])
+            # family_fitur.append(p4pr)
 
             #crossover dan mutasi
             bin_mama = list(pop[mama_index])
             bin_papa = list(pop[papa_index])
             anak_binary = lib.crossover(bin_mama, bin_papa, panjang_fitur,  jumlah_titik = jumlah_titik, prob_mutasi = prob_mutasi)
+            
+            counter_anak = 0
+            for anak_binary_ in anak_binary:
+                if sum(anak_binary_)<=0:
+                    anak_binary_[-1]=1
+                    anak_binary_[-2]=1
+                str_anak = lib.int_to_str(anak_binary_)
+                if str_anak in pop_used:
+                    family_fitur.append(anak_binary_)
+                    family_fitness.append(pop_used[str_anak])
+                else:
+                    fitness_anak = lib.fitness_(dataL, labelL, dataU, labelU, anak_binary_, fitur, alpha = alpha, metode = metode)
+                    family_fitur.append(anak_binary_)
+                    family_fitness.append(fitness_anak)
+                    pop_used.update({str_anak:fitness_anak})
+                counter_anak+=1
+                if (additional_child == False) and (counter_anak >=2):
+                    print(counter_anak, len(family_fitness))
+                    break
+
+
 
             #mencari fitness untuk child
-            a1 = anak_binary[0]
-            a2 = anak_binary[1]
-            a3 = anak_binary[2]
-    #         print(a2)
+            # a1 = anak_binary[0]
+            # a2 = anak_binary[1]
+            # a3 = anak_binary[2]
 
-            if sum(a1)<=0:
-                a1[-1]=1
-                a1[-2]=1
-            if sum(a2)<=0:
-                a2[-1]=1
-                a2[-2]=1
-            if sum(a3)<=0:
-                a3[-1]=1
-                a3[-2]=1
+            # if sum(a1)<=0:
+            #     a1[-1]=1
+            #     a1[-2]=1
+            # if sum(a2)<=0:
+            #     a2[-1]=1
+            #     a2[-2]=1
+            # if sum(a3)<=0:
+            #     a3[-1]=1
+            #     a3[-2]=1
 
-            str_a1 = lib.int_to_str(a1)
-            if str_a1 in pop_used:
-                family_fitur.append(a1)
-                family_fitness.append(pop_used[str_a1])
+            # str_a1 = lib.int_to_str(a1)
+            # if str_a1 in pop_used:
+            #     family_fitur.append(a1)
+            #     family_fitness.append(pop_used[str_a1])
 
-            else:
-                family_fitur.append(a1)
-                fitness_anak_1 = lib.fitness_(dataL, labelL, dataU, labelU, a1, fitur, alpha = alpha, metode = metode)
-                family_fitness.append(fitness_anak_1)
-                pop_used.update({str_a1:fitness_anak_1})
+            # else:
+            #     family_fitur.append(a1)
+            #     fitness_anak_1 = lib.fitness_(dataL, labelL, dataU, labelU, a1, fitur, alpha = alpha, metode = metode)
+            #     family_fitness.append(fitness_anak_1)
+            #     pop_used.update({str_a1:fitness_anak_1})
 
-            str_a2 = lib.int_to_str(a2)
-            if str_a2 in pop_used:
-                family_fitur.append(a2)
-                family_fitness.append(pop_used[str_a2])
-            else:
-                family_fitur.append(a2)
-                fitness_anak_2 = lib.fitness_(dataL, labelL, dataU, labelU, a2, fitur, alpha = alpha, metode = metode)
-                family_fitness.append(fitness_anak_2)
-                pop_used.update({str_a2:fitness_anak_2})
+            # str_a2 = lib.int_to_str(a2)
+            # if str_a2 in pop_used:
+            #     family_fitur.append(a2)
+            #     family_fitness.append(pop_used[str_a2])
+            # else:
+            #     family_fitur.append(a2)
+            #     fitness_anak_2 = lib.fitness_(dataL, labelL, dataU, labelU, a2, fitur, alpha = alpha, metode = metode)
+            #     family_fitness.append(fitness_anak_2)
+            #     pop_used.update({str_a2:fitness_anak_2})
 
-            if additional_child == True:
-                str_a3 = lib.int_to_str(a3)
-                if str_a3 in pop_used:
-                    family_fitur.append(a3)
-                    family_fitness.append(pop_used[str_a3])
-                else:
-                    family_fitur.append(a3)
-                    fitness_anak_3 = lib.fitness_(dataL, labelL, dataU, labelU, a3, fitur, alpha = alpha, metode = metode)
-                    family_fitness.append(fitness_anak_3)
-                    pop_used.update({str_a3:fitness_anak_3})
+            # if additional_child == True:
+            #     str_a3 = lib.int_to_str(a3)
+            #     if str_a3 in pop_used:
+            #         family_fitur.append(a3)
+            #         family_fitness.append(pop_used[str_a3])
+            #     else:
+            #         family_fitur.append(a3)
+            #         fitness_anak_3 = lib.fitness_(dataL, labelL, dataU, labelU, a3, fitur, alpha = alpha, metode = metode)
+            #         family_fitness.append(fitness_anak_3)
+            #         pop_used.update({str_a3:fitness_anak_3})
 
             #mencari fitness terbaik untuk satu keluarga
             best_family_fitness = max(family_fitness)
